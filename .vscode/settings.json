@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/6ffc7084-e7fe-4655-89f0-8135f32160b1/resourceGroups/TourDuLich/providers/Microsoft.Web/sites/dulich-huflit",
+    "appService.deploySubpath": "."
+}
