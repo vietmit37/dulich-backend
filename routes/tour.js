@@ -37,6 +37,7 @@ router.route('/').get((req, res) => {
             conn.close();
         });
 })
+
 //GET tour bằng IDTour
 router.route('/chiTiet/:IDTour').get((req, res) => {
     const query = 'EXEC GetTourWithID ' + req.params.IDTour;
@@ -70,6 +71,7 @@ router.route('/chiTiet/:IDTour').get((req, res) => {
             conn.close();
         });
 })
+
 //GET chi tiết đăng ký tour bằng IDTour
 router.route('/chiTietDangKy/:IDTour').get((req, res) => {
     const query =
@@ -104,6 +106,7 @@ router.route('/chiTietDangKy/:IDTour').get((req, res) => {
             conn.close();
         });
 })
+
 //GET các tour bằng IDDiaDiem
 router.route('/:IDDiaDiem').get((req, res) => {
     //simple query
@@ -138,7 +141,6 @@ router.route('/:IDDiaDiem').get((req, res) => {
             conn.close();
         });
 })
-
 
 //GET hình ảnh bìa của 1 tour
 router.route('/HinhAnh/:IDTour').get((req, res) => {

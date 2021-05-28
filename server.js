@@ -9,10 +9,12 @@ app.use(cors())
 const diaDiemRouter = require('./routes/diaDiem')
 const tourRouter = require('./routes/tour')
 const theLoaiTourRouter = require('./routes/theLoaiTour')
+const khungThoiGianRouter = require('./routes/khungThoiGian')
 
 app.use('/diaDiem', diaDiemRouter)
 app.use('/tour', tourRouter)
 app.use('/theLoaiTour', theLoaiTourRouter)
+app.use('/khungThoiGian', khungThoiGianRouter)
 
 app.listen(port, () => {
     console.log(`Backend đang chạy tại http://localhost:${port}`)
