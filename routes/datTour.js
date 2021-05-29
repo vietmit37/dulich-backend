@@ -2,9 +2,26 @@ const router = require('express').Router()
 const sql = require("mssql");
 const dbConfig = require('../dbConfig')
 
-//GET khung thời gian = IDKhungThoiGian
-router.route('/:IDKhungThoiGian').get((req, res) => {
-    const query = 'SELECT * FROM KHUNGTHOIGIAN WHERE IDKhungThoiGian = ' + req.params.IDKhungThoiGian;
+//Đặt tour
+router.route('/datTour').post((req, res) => {
+    const DanhXung = req.body.DanhXung
+    const HoTen = req.body.HoTen
+    const SoDienThoai = req.body.SoDienThoai
+    const Email = req.body.Email
+
+    const HoTenChung = req.body.HoTenChung
+    const SoDienThoaiChung = req.body.SoDienThoaiChung
+    const EmailChung = req.body.EmailChung
+    const LaKhachThamQuan = req.body.LaKhachThamQuan
+    const SoLuongNguoiLon = req.body.SoLuongNguoiLon
+    const SoLuongTreEm = req.body.SoLuongTreEm
+    const TongTien = req.body.TongTien
+    const IDTour = req.body.IDTour
+
+    const query = `EXEC OrderTour @DanhXung = ${DanhXung}, @HoTen = ${HoTen}, @SoDienThoai = ${SoDienThoai}, @Email = N'${Email}',
+    @HoTenChung = N'${HoTenChung}', @SoDienThoaiChung = N'${SoDienThoaiChung}', @EmailChung = N'${EmailChung}',
+    @LaKhachThamQuan = N'${LaKhachThamQuan}', @SoLuongNguoiLon = ${SoLuongNguoiLon}, @SoLuongTreEm = ${SoLuongTreEm}, 
+    @TongTien = ${TongTien}, @IDTour = ${IDTour}`
 
     // Create connection instance
     const conn = new sql.ConnectionPool(dbConfig);
