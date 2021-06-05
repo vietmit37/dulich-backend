@@ -257,12 +257,14 @@ router.route('/add').post((req, res) => {
     const LichTrinh = req.body.LichTrinh
     const NoiDung = req.body.NoiDung
     const DoDai = req.body.DoDai
+    const GiaNguoiLon = req.body.GiaNguoiLon
+    const GiaTreEm = req.body.GiaTreEm
 
     //Query
     const query =
         `EXEC AddTour @IDDiaDiem = ${DiaDiem}, @IDTheLoaiTour = ${TheLoai}, @TenTour = N'${TenTour}',
             @DiaChiTour = N'${DiaChiTour}', @DiemNoiBat = N'${DiemNoiBat}', @LichTrinh = N'${LichTrinh}',
-            @NoiDung = N'${NoiDung}', @DoDai = ${DoDai}`
+            @NoiDung = N'${NoiDung}', @DoDai = ${DoDai}, @GiaNguoiLon = ${GiaNguoiLon}, @GiaTreEm = ${GiaTreEm}, @NguoiLonToiThieu = 1`
 
     // Create connection instance
     const conn = new sql.ConnectionPool(dbConfig);
@@ -374,6 +376,7 @@ router.route('/insertPic').post((req, res) => {
 router.route('/modifyTour').post((req, res) => {
     const IDTour = req.body.IDTour
     const TenTour = req.body.TenTour
+    const TheLoai = req.body.TheLoai
     const DiaChiTour = req.body.DiaChiTour
     const DiemNoiBat = req.body.DiemNoiBat
     const LichTrinh = req.body.LichTrinh
@@ -383,7 +386,7 @@ router.route('/modifyTour').post((req, res) => {
     const GiaTreEm = req.body.GiaTreEm
     const NguoiLonToiThieu = req.body.NguoiLonToiThieu
 
-    const query = `EXEC ModifyTour @IDTour = ${IDTour}, @IDDiaDiem = ${DiaDiem}, @IDTheLoaiTour = ${TheLoai}, @TenTour = N'${TenTour}',
+    const query = `EXEC ModifyTour @IDTour = ${IDTour}, @IDTheLoaiTour = ${TheLoai}, @TenTour = N'${TenTour}',
         @DiaChiTour = N'${DiaChiTour}', @DiemNoiBat = N'${DiemNoiBat}', @LichTrinh = N'${LichTrinh}',
         @NoiDung = N'${NoiDung}', @DoDai = ${DoDai}, @GiaNguoiLon = ${GiaNguoiLon}, @GiaTreEm = ${GiaTreEm}, @NguoiLonToiThieu = ${NguoiLonToiThieu}`
 
