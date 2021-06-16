@@ -19,10 +19,10 @@ router.route('/').post((req, res) => {
     const TongTien = req.body.TongTien
     const IDTour = req.body.IDTour
 
-    const query = `EXEC OrderTour @DanhXung = ${DanhXung}, @HoTen = ${HoTen}, @SoDienThoai = ${SoDienThoai}, @Email = N'${Email}',
-    @HoTenChung = N'${HoTenChung}', @SoDienThoaiChung = N'${SoDienThoaiChung}', @EmailChung = N'${EmailChung}',
-    @LaKhachThamQuan = N'${LaKhachThamQuan}', @SoLuongNguoiLon = ${SoLuongNguoiLon}, @SoLuongTreEm = ${SoLuongTreEm}, 
-    @TongTien = ${TongTien}, @IDTour = ${IDTour}, @NgayDi = ${NgayDi}`
+    const query = `EXEC OrderTour @DanhXung = N'${DanhXung}', @HoTen = N'${HoTen}', @SoDienThoai = '${SoDienThoai}', @Email = '${Email}',
+    @HoTenChung = N'${HoTenChung}', @SoDienThoaiChung = '${SoDienThoaiChung}', @EmailChung = '${EmailChung}',
+    @LaKhachThamQuan = ${LaKhachThamQuan}, @SoLuongNguoiLon = ${SoLuongNguoiLon}, @SoLuongTreEm = ${SoLuongTreEm}, 
+    @TongTien = ${TongTien}, @IDTour = ${IDTour}, @NgayDi = '${NgayDi}'`
 
     // Create connection instance
     const conn = new sql.ConnectionPool(dbConfig);

@@ -142,6 +142,41 @@ router.route('/:IDDiaDiem').get((req, res) => {
         });
 })
 
+//GET top 4 tour bằng IDDiaDiem
+router.route('/top4/:IDDiaDiem').get((req, res) => {
+    //simple query
+    const query = 'SELECT TOP 5 * FROM TOUR WHERE IDDiaDiem = ' + req.params.IDDiaDiem;
+
+    // Create connection instance
+    const conn = new sql.ConnectionPool(dbConfig);
+
+    conn.connect()
+        // Successfull connection
+        .then(function () {
+
+            // Create request instance, passing in connection instance
+            const req = new sql.Request(conn);
+
+            // Call mssql's query method passing in params
+            req.query(query)
+                .then(function (recordsets) {
+                    res.send(recordsets.recordset);
+                    conn.close();
+                })
+                // Handle sql statement execution errors
+                .catch(function (err) {
+                    console.log(err);
+                    conn.close();
+                })
+
+        })
+        // Handle connection errors
+        .catch(function (err) {
+            console.log(err);
+            conn.close();
+        });
+})
+
 //GET hình ảnh bìa của 1 tour
 router.route('/HinhAnh/:IDTour').get((req, res) => {
     const query =
