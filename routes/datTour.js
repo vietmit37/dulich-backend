@@ -4,25 +4,23 @@ const dbConfig = require('../dbConfig')
 
 //Đặt tour
 router.route('/').post((req, res) => {
+    const UserID = req.body.UserID
     const DanhXung = req.body.DanhXung
     const HoTen = req.body.HoTen
     const SoDienThoai = req.body.SoDienThoai
     const Email = req.body.Email
     const NgayDi = req.body.NgayDi
 
-    const HoTenChung = req.body.HoTenChung
-    const SoDienThoaiChung = req.body.SoDienThoaiChung
-    const EmailChung = req.body.EmailChung
-    const LaKhachThamQuan = req.body.LaKhachThamQuan
     const SoLuongNguoiLon = req.body.SoLuongNguoiLon
     const SoLuongTreEm = req.body.SoLuongTreEm
     const TongTien = req.body.TongTien
     const IDTour = req.body.IDTour
+    const IDKhungThoiGian = req.body.IDKhungThoiGian
+    const ThoiGianTaoOrder = req.body.ThoiGianTaoOrder
 
-    const query = `EXEC OrderTour @DanhXung = N'${DanhXung}', @HoTen = N'${HoTen}', @SoDienThoai = '${SoDienThoai}', @Email = '${Email}',
-    @HoTenChung = N'${HoTenChung}', @SoDienThoaiChung = '${SoDienThoaiChung}', @EmailChung = '${EmailChung}',
-    @LaKhachThamQuan = ${LaKhachThamQuan}, @SoLuongNguoiLon = ${SoLuongNguoiLon}, @SoLuongTreEm = ${SoLuongTreEm}, 
-    @TongTien = ${TongTien}, @IDTour = ${IDTour}, @NgayDi = '${NgayDi}'`
+    const query = `EXEC OrderTour @IDUser = ${UserID}, @DanhXung = N'${DanhXung}', @HoTen = N'${HoTen}', @SoDienThoai = '${SoDienThoai}', @Email = '${Email}',
+    @SoLuongNguoiLon = ${SoLuongNguoiLon}, @SoLuongTreEm = ${SoLuongTreEm}, 
+    @TongTien = ${TongTien}, @IDTour = ${IDTour}, @IDKhungThoiGian = ${IDKhungThoiGian}, @NgayDi = '${NgayDi}', @ThoiGianTaoOrder = ${ThoiGianTaoOrder}`
 
     // Create connection instance
     const conn = new sql.ConnectionPool(dbConfig);
@@ -126,14 +124,15 @@ router.route('/chiTiet/:IDDat').get((req, res) => {
 
 //GET thông tin Đặt tour chi tiết bằng các trường thông tin
 router.route('/chiTiet/useThongTinCT').post((req, res) => {
-    const hoTen = req.body.HoTen
-    const soDienThoai = req.body.SoDienThoai
+    const IDUser = req.body.IDUser
+    const SDT = req.body.SoDienThoai
     const ngayDi = req.body.NgayDi
     const IDTour = req.body.IDTour
+    const ThoiGianTaoOrder = req.body.ThoiGianTaoOrder
 
     const query = `SELECT * 
     FROM DATTOUR 
-    WHERE HoTen = N'${hoTen}' AND SoDienThoai = '${soDienThoai}' AND IDTour = ${IDTour} AND NgayDi = '${ngayDi}';`
+    WHERE SDT = '${SDT}' AND IDUser = ${IDUser} AND IDTour = ${IDTour} AND NgayDi = '${ngayDi}' AND ThoiGianTaoOrder = ${ThoiGianTaoOrder};`
 
     // Create connection instance
     const conn = new sql.ConnectionPool(dbConfig);
