@@ -20,7 +20,7 @@ router.route('/').post((req, res) => {
 
     const query = `EXEC OrderTour @IDUser = ${UserID}, @DanhXung = N'${DanhXung}', @HoTen = N'${HoTen}', @SoDienThoai = '${SoDienThoai}', @Email = '${Email}',
     @SoLuongNguoiLon = ${SoLuongNguoiLon}, @SoLuongTreEm = ${SoLuongTreEm}, 
-    @TongTien = ${TongTien}, @IDTour = ${IDTour}, @IDKhungThoiGian = ${IDKhungThoiGian}, @NgayDi = '${NgayDi}', @ThoiGianTaoOrder = ${ThoiGianTaoOrder}`
+    @TongTien = ${TongTien}, @IDTour = ${IDTour}, @IDKhungThoiGian = ${IDKhungThoiGian}, @NgayDi = '${NgayDi}', @ThoiGianTaoOrder = '${ThoiGianTaoOrder}'`
 
     // Create connection instance
     const conn = new sql.ConnectionPool(dbConfig);
@@ -122,6 +122,43 @@ router.route('/chiTiet/:IDDat').get((req, res) => {
         });
 })
 
+//Customer huỷ tour, chuyển trạng thái thành Refunding
+router.route('/refunding/:IDDat').get((req, res) => {
+
+    const query = `UPDATE DATTOUR SET TrangThai = 1 WHERE IDDat = ` + req.params.IDDat
+
+    // Create connection instance
+    const conn = new sql.ConnectionPool(dbConfig);
+
+    conn.connect()
+        // Successfull connection
+        .then(function () {
+
+            // Create request instance, passing in connection instance
+            const req = new sql.Request(conn);
+
+            // Call mssql's query method passing in params
+            req.query(query)
+                .then(function (recordsets) {
+                    res.send('very sad right now');
+                    conn.close();
+                })
+                // Handle sql statement execution errors
+                .catch(function (err) {
+                    console.log(err);
+                    conn.close();
+                })
+
+        })
+        // Handle connection errors
+        .catch(function (err) {
+            console.log(err);
+            conn.close();
+        });
+})
+
+//Partner xác nhận huỷ tour, chuyển trạng thái thành Refunded
+
 //GET thông tin Đặt tour chi tiết bằng các trường thông tin
 router.route('/chiTiet/useThongTinCT').post((req, res) => {
     const IDUser = req.body.IDUser
@@ -132,7 +169,7 @@ router.route('/chiTiet/useThongTinCT').post((req, res) => {
 
     const query = `SELECT * 
     FROM DATTOUR 
-    WHERE SDT = '${SDT}' AND IDUser = ${IDUser} AND IDTour = ${IDTour} AND NgayDi = '${ngayDi}' AND ThoiGianTaoOrder = ${ThoiGianTaoOrder};`
+    WHERE SDT = '${SDT}' AND IDUser = '${IDUser}' AND IDTour = ${IDTour} AND NgayDi = '${ngayDi}' AND ThoiGianTaoOrder = ${ThoiGianTaoOrder};`
 
     // Create connection instance
     const conn = new sql.ConnectionPool(dbConfig);

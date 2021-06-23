@@ -528,5 +528,110 @@ router.route('/searchTour/:TuKhoaTimKiem').get((req, res) => {
         });
 })
 
+//GET list tour đã đặt của khách
+router.route('/tourDaDat/:IDUser').get((req, res) => {
+    const IDUser = req.params.IDUser
 
+    const query =
+        `SELECT * FROM DATTOUR WHERE IDUser = '` + IDUser + `'`;
+
+    // Create connection instance
+    const conn = new sql.ConnectionPool(dbConfig);
+
+    conn.connect()
+        // Successfull connection
+        .then(function () {
+
+            // Create request instance, passing in connection instance
+            const req = new sql.Request(conn);
+
+            // Call mssql's query method passing in params
+            req.query(query)
+                .then(function (recordsets) {
+                    res.send(recordsets.recordset);
+                    conn.close();
+                })
+                // Handle sql statement execution errors
+                .catch(function (err) {
+                    console.log(err);
+                    conn.close();
+                })
+
+        })
+        // Handle connection errors
+        .catch(function (err) {
+            console.log(err);
+            conn.close();
+        });
+})
+
+//Thêm tour vào yêu thích
+router.route('/favorite').post((req, res) => {
+    const IDTour = req.body.IDTour
+    const IDUser = req.body.IDUser
+    //simple query
+    const query = `INSERT INTO YEUTHICH(IDTour, IDUser) VALUES(${IDTour}, '${IDUser}')`
+
+    // Create connection instance
+    const conn = new sql.ConnectionPool(dbConfig);
+
+    conn.connect()
+        // Successfull connection
+        .then(function () {
+
+            // Create request instance, passing in connection instance
+            const req = new sql.Request(conn);
+
+            // Call mssql's query method passing in params
+            req.query(query)
+                .then(function (recordsets) {
+                    res.send(recordsets.recordset);
+                    conn.close();
+                })
+                // Handle sql statement execution errors
+                .catch(function (err) {
+                    console.log(err);
+                    conn.close();
+                })
+
+        })
+        // Handle connection errors
+        .catch(function (err) {
+            console.log(err);
+            conn.close();
+        });
+})
+router.route('/getFavorites/:IDUser').get((req, res) => {
+    const query =
+        `SELECT * FROM YEUTHICH WHERE IDUser = '${req.params.IDUser}'`;
+
+    // Create connection instance
+    const conn = new sql.ConnectionPool(dbConfig);
+
+    conn.connect()
+        // Successfull connection
+        .then(function () {
+
+            // Create request instance, passing in connection instance
+            const req = new sql.Request(conn);
+
+            // Call mssql's query method passing in params
+            req.query(query)
+                .then(function (recordsets) {
+                    res.send(recordsets.recordset);
+                    conn.close();
+                })
+                // Handle sql statement execution errors
+                .catch(function (err) {
+                    console.log(err);
+                    conn.close();
+                })
+
+        })
+        // Handle connection errors
+        .catch(function (err) {
+            console.log(err);
+            conn.close();
+        });
+})
 module.exports = router;
