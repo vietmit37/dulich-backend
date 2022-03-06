@@ -3,7 +3,7 @@ const app = express()
 const port = 5000
 const cors = require('cors')
 const stripe = require("stripe")("sk_test_51IzjQtAHeeyUAi3RSHbt1sPob40b8icOzAMQYELld6hLGtJvMS1oqZtcvx0vcetqLSQMrgLS8nPeurvLJVMI35Mb00vo0mXV7B")
-const sql = require("mssql");
+const sql = require("mssql/msnodesqlv8");
 const dbConfig = require('./dbConfig')
 
 const allowCrossDomain = (req, res, next) => {

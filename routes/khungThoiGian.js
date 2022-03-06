@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const sql = require("mssql");
+const sql = require("mssql/msnodesqlv8");
 const dbConfig = require('../dbConfig')
 
 //GET khung thời gian = IDKhungThoiGian
